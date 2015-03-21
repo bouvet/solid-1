@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfInventoryItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <InventoryItem>
+    <ItemCode>I1</ItemCode>
+    <PricingCalculation>FULLQUANTITY</PricingCalculation>
+    <UnitName />
+    <WeightPerUnit>0.25</WeightPerUnit>
+    <PricePerUnit>1</PricePerUnit>
+    <RebatePerUnit>0</RebatePerUnit>
+    <QuantityOnHand>100</QuantityOnHand>
+    <VatRate>0.25</VatRate>
+  </InventoryItem>
+  <InventoryItem>
+    <ItemCode>I2</ItemCode>
+    <PricingCalculation>BUY2GET1FREE</PricingCalculation>
+    <UnitName />
+    <WeightPerUnit>0.1</WeightPerUnit>
+    <PricePerUnit>2</PricePerUnit>
+    <RebatePerUnit>0</RebatePerUnit>
+    <QuantityOnHand>500</QuantityOnHand>
+    <VatRate>0.25</VatRate>
+  </InventoryItem>
+</ArrayOfInventoryItem>
