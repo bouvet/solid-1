@@ -2,6 +2,10 @@ package no.bouvet.solid.srpdip;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+
+@XmlRootElement
 public class RequestMessage {
 	private long requestId;
 	private Operation operation;

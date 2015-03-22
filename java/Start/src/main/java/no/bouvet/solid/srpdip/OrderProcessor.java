@@ -15,7 +15,7 @@ public class OrderProcessor {
 	private static final String ORDER_FILE_NAME = "orderFile.xml";
 
 	private static final Logger LOG = Logger.getLogger(OrderProcessor.class);
-	
+
 	private Map<Long, ResponseMessage> processedMessages = new HashMap<>();
 	private Map<String, InventoryItem> inventory;
 	private Map<Long, Order> orders;
@@ -181,13 +181,13 @@ public class OrderProcessor {
 	}
 
 	private static ResponseMessage createErrorResponseMessage(long requestId, Exception ex)
-    {
-        return new ResponseMessage(requestId);
-//        {
-//            StatusCode = HttpStatusCode.InternalServerError,
-//            ResponseBody = ex.ToString()
-//        };
-    }
+	{
+		return new ResponseMessage(requestId);
+		// {
+		// StatusCode = HttpStatusCode.InternalServerError,
+		// ResponseBody = ex.ToString()
+		// };
+	}
 
 	private static ResponseMessage createOrderSubmissionResponseMessage(RequestMessage reqMsg, Order order)
 	{
@@ -227,7 +227,8 @@ public class OrderProcessor {
 	private void readInventoryFromFile()
 	{
 		try {
-			inventory = (Map<String, InventoryItem>) new XStream().fromXML(new File(INVENTORY_FILE_NAME));
+			inventory = (Map<String, InventoryItem>) new XStream().fromXML(getClass().getClassLoader().getResourceAsStream(
+					INVENTORY_FILE_NAME));
 		} catch (Exception ex) {
 			// Trace.WriteLine("Exception while trying to read inventory from file: "
 			// + ex, "InventoryError");
@@ -250,7 +251,7 @@ public class OrderProcessor {
 	private void readOrdersFromFile()
 	{
 		try {
-			orders = (Map<Long, Order>) new XStream().fromXML(new File(ORDER_FILE_NAME));
+			orders = (Map<Long, Order>) new XStream().fromXML(getClass().getClassLoader().getResourceAsStream(ORDER_FILE_NAME));
 		} catch (Exception ex) {
 			// Trace.WriteLine("Exception while trying to read orders from file: "
 			// + ex, "OrderError");

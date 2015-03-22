@@ -2,10 +2,14 @@ package no.bouvet.solid.srpdip;
 
 import com.sun.grizzly.http.SelectorThread;
 import com.sun.jersey.api.container.grizzly.GrizzlyWebContainerFactory;
+
 import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+
 import javax.ws.rs.core.UriBuilder;
 
 public class Program {
@@ -17,6 +21,8 @@ public class Program {
 
 		initParams.put("com.sun.jersey.config.property.packages",
 				"no.bouvet.solid.srpdip");
+		initParams.put("com.sun.jersey.api.json.POJOMappingFeature",
+				"true");
 
 		System.out.println("Starting grizzly...");
 		SelectorThread threadSelector = GrizzlyWebContainerFactory.create(BASE_URI, initParams);

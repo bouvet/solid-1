@@ -1,8 +1,11 @@
 package no.bouvet.solid.srpdip;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class ResponseMessage {
 	private long requestId;
-	
+
 	public ResponseMessage(long requestId) {
 		this.requestId = requestId;
 	}
