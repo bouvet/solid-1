@@ -1,10 +1,12 @@
-package no.bouvet.solid.srpdip;
+package no.bouvet.solid.srpdip.messageinterface;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import no.bouvet.solid.srpdip.OrderProcessor;
 
 @Path("/")
 public class MessageProcessor {

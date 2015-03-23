@@ -1,8 +1,12 @@
-package no.bouvet.solid.srpdip;
+package no.bouvet.solid.srpdip.messageinterface;
 
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
+import no.bouvet.solid.srpdip.domain.Address;
+import no.bouvet.solid.srpdip.domain.ContactInformation;
+import no.bouvet.solid.srpdip.domain.OrderItem;
 
 
 @XmlRootElement
@@ -12,7 +16,6 @@ public class RequestMessage {
 	private long accountId;
 	private long orderId;
 	private List<OrderItem> orderItems;
-	private PaymentInformation paymentInformation;
 	private Address shippingAddress;
 	private Address billingAddress;
 	private ContactInformation contactInformation;
@@ -56,14 +59,6 @@ public class RequestMessage {
 
 	public void setOrderItems(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
-	}
-
-	public PaymentInformation getPaymentInformation() {
-		return paymentInformation;
-	}
-
-	public void setPaymentInformation(PaymentInformation paymentInformation) {
-		this.paymentInformation = paymentInformation;
 	}
 
 	public Address getShippingAddress() {

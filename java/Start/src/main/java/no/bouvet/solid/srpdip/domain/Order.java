@@ -1,4 +1,4 @@
-package no.bouvet.solid.srpdip;
+package no.bouvet.solid.srpdip.domain;
 
 import java.util.ArrayList;
 import java.util.List;

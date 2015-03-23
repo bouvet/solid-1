@@ -1,4 +1,5 @@
-package no.bouvet.solid.srpdip;
+package no.bouvet.solid.srpdip.messageinterface;
+
 
 public class OrderCancellationResponse extends ResponseMessage {
 	private long orderId;

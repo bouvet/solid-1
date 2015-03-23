@@ -1,4 +1,4 @@
-package no.bouvet.solid.srpdip;
+package no.bouvet.solid.srpdip.domain;
 
 public class ContactInformation {
 	private String givenName;

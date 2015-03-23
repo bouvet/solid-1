@@ -5,6 +5,17 @@ import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import no.bouvet.solid.srpdip.domain.InventoryItem;
+import no.bouvet.solid.srpdip.domain.Order;
+import no.bouvet.solid.srpdip.domain.OrderItem;
+import no.bouvet.solid.srpdip.domain.OrderItemState;
+import no.bouvet.solid.srpdip.domain.OrderState;
+import no.bouvet.solid.srpdip.messageinterface.OrderCancellationResponse;
+import no.bouvet.solid.srpdip.messageinterface.OrderQueryResponseMessage;
+import no.bouvet.solid.srpdip.messageinterface.OrderSubmissionResponse;
+import no.bouvet.solid.srpdip.messageinterface.RequestMessage;
+import no.bouvet.solid.srpdip.messageinterface.ResponseMessage;
+
 import org.apache.log4j.Logger;
 
 import com.thoughtworks.xstream.XStream;

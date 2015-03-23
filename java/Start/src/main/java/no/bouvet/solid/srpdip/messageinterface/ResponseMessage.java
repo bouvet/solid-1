@@ -1,4 +1,4 @@
-package no.bouvet.solid.srpdip;
+package no.bouvet.solid.srpdip.messageinterface;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

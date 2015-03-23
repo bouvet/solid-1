@@ -1,4 +1,4 @@
-package no.bouvet.solid.srpdip;
+package no.bouvet.solid.srpdip.domain;
 
 public enum OrderItemState {
 	NOT_PROCESSED,

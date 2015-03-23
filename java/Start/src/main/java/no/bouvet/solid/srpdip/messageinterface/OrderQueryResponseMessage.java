@@ -1,4 +1,6 @@
-package no.bouvet.solid.srpdip;
+package no.bouvet.solid.srpdip.messageinterface;
+
+import no.bouvet.solid.srpdip.domain.Order;
 
 public class OrderQueryResponseMessage extends ResponseMessage {
 	private Order order;
