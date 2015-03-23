@@ -1,10 +1,10 @@
 <map>
 	<entry>
 		<long>1024</long>
-		<no.bouvet.solid.srpdip.Order>
+		<no.bouvet.solid.srpdip.domain.Order>
 			<orderId>1024</orderId>
 			<orderItems>
-				<no.bouvet.solid.srpdip.OrderItem>
+				<no.bouvet.solid.srpdip.domain.OrderItem>
 					<orderItemId>1</orderItemId>
 					<itemCode>I1</itemCode>
 					<weightPerUnit>1</weightPerUnit>
@@ -16,8 +16,8 @@
 					<vat>0</vat>
 					<weight>1</weight>
 					<state>NOT_PROCESSED</state>
-				</no.bouvet.solid.srpdip.OrderItem>
-				<no.bouvet.solid.srpdip.OrderItem>
+				</no.bouvet.solid.srpdip.domain.OrderItem>
+				<no.bouvet.solid.srpdip.domain.OrderItem>
 					<orderItemId>2</orderItemId>
 					<itemCode>I2</itemCode>
 					<weightPerUnit>1</weightPerUnit>
@@ -29,7 +29,7 @@
 					<vat>0</vat>
 					<weight>1</weight>
 					<state>FILLED</state>
-				</no.bouvet.solid.srpdip.OrderItem>
+				</no.bouvet.solid.srpdip.domain.OrderItem>
 			</orderItems>
 			<totalWeight>12</totalWeight>
 			<rebateTotal>4</rebateTotal>
@@ -38,14 +38,14 @@
 			<vatSubtotal>7</vatSubtotal>
 			<orderTotal>3</orderTotal>
 			<state>NOT_PROCESSED</state>
-		</no.bouvet.solid.srpdip.Order>
+		</no.bouvet.solid.srpdip.domain.Order>
 	</entry>
 	<entry>
 		<long>1025</long>
-		<no.bouvet.solid.srpdip.Order>
+		<no.bouvet.solid.srpdip.domain.Order>
 			<orderId>1025</orderId>
 			<orderItems>
-				<no.bouvet.solid.srpdip.OrderItem>
+				<no.bouvet.solid.srpdip.domain.OrderItem>
 					<orderItemId>1</orderItemId>
 					<itemCode>I1</itemCode>
 					<weightPerUnit>1</weightPerUnit>
@@ -57,8 +57,8 @@
 					<vat>0</vat>
 					<weight>1</weight>
 					<state>NOT_ENOUGH_QUANTITY_ON_HAND</state>
-				</no.bouvet.solid.srpdip.OrderItem>
-				<no.bouvet.solid.srpdip.OrderItem>
+				</no.bouvet.solid.srpdip.domain.OrderItem>
+				<no.bouvet.solid.srpdip.domain.OrderItem>
 					<orderItemId>2</orderItemId>
 					<itemCode>I2</itemCode>
 					<weightPerUnit>1</weightPerUnit>
@@ -70,7 +70,7 @@
 					<vat>0</vat>
 					<weight>1</weight>
 					<state>CANCELLED</state>
-				</no.bouvet.solid.srpdip.OrderItem>
+				</no.bouvet.solid.srpdip.domain.OrderItem>
 			</orderItems>
 			<totalWeight>12</totalWeight>
 			<rebateTotal>4</rebateTotal>
@@ -79,6 +79,6 @@
 			<vatSubtotal>7</vatSubtotal>
 			<orderTotal>3</orderTotal>
 			<state>SHIPPED</state>
-		</no.bouvet.solid.srpdip.Order>
+		</no.bouvet.solid.srpdip.domain.Order>
 	</entry>
 </map>

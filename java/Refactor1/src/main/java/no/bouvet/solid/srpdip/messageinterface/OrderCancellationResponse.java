@@ -6,7 +6,7 @@ public class OrderCancellationResponse extends ResponseMessage {
 	public String orderState;
 	public String message;
 
-	public OrderCancellationResponse(long requestId, long orderId, String OrderState, String message) {
+	public OrderCancellationResponse(long requestId, long orderId, String orderState, String message) {
 		super(requestId);
 		this.orderId = orderId;
 		this.orderState = orderState;

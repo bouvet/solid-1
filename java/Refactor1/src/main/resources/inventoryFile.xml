@@ -1,7 +1,7 @@
 <map>
 	<entry>
 		<string>I1</string>
-		<no.bouvet.solid.srpdip.InventoryItem>
+		<no.bouvet.solid.srpdip.domain.InventoryItem>
 			<itemCode>I1</itemCode>
 			<pricingCalculation>FULLQUANTITY</pricingCalculation>
 			<unitName />
@@ -10,11 +10,11 @@
 			<rebatePerUnit>0</rebatePerUnit>
 			<quantityOnHand>100</quantityOnHand>
 			<vatRate>0.25</vatRate>
-		</no.bouvet.solid.srpdip.InventoryItem>
+		</no.bouvet.solid.srpdip.domain.InventoryItem>
 	</entry>
 	<entry>
 		<string>I2</string>
-		<no.bouvet.solid.srpdip.InventoryItem>
+		<no.bouvet.solid.srpdip.domain.InventoryItem>
 			<itemCode>I2</itemCode>
 			<pricingCalculation>BUY2GET1FREE</pricingCalculation>
 			<unitName />
@@ -23,6 +23,6 @@
 			<rebatePerUnit>0</rebatePerUnit>
 			<quantityOnHand>500</quantityOnHand>
 			<vatRate>0.25</vatRate>
-		</no.bouvet.solid.srpdip.InventoryItem>
+		</no.bouvet.solid.srpdip.domain.InventoryItem>
 	</entry>
 </map>
