@@ -20,13 +20,13 @@ public class OrderProcessor {
 	private Map<String, InventoryItem> inventory;
 	private Map<Long, Order> orders;
 
-	private long _lastOrderId = 0;
+	private long lastOrderId = 0;
 
 	public OrderProcessor()
 	{
 		readInventoryFromFile();
 		readOrdersFromFile();
-		_lastOrderId = orders.values().stream()
+		lastOrderId = orders.values().stream()
 				.mapToLong(Order::getOrderId)
 				.max()
 				.orElse(0);
@@ -136,7 +136,7 @@ public class OrderProcessor {
 	private ResponseMessage createOrder(RequestMessage reqMsg)
 	{
 		try {
-			Order order = new Order(++_lastOrderId);
+			Order order = new Order(++lastOrderId);
 
 			order.getOrderItems().addAll(reqMsg.getOrderItems());
 
