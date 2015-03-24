@@ -6,12 +6,12 @@ import no.bouvet.solid.srpdip.domain.orderoperations.GetOrderOperation;
 import no.bouvet.solid.srpdip.messageinterface.RequestMessage;
 import no.bouvet.solid.srpdip.messageinterface.ResponseMessage;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class OrderProcessor {
 
-	private static final Logger LOG = Logger.getLogger(OrderProcessor.class);
-
+	private static final Logger LOG = LoggerFactory.getLogger(OrderProcessor.class);
 
 	private Deduplicator deduplicator = new Deduplicator();
 	private InventoryRepository inventoryRepository = new InventoryRepository();
@@ -26,8 +26,7 @@ public class OrderProcessor {
 
 		ResponseMessage response;
 
-		switch (reqMsg.getOperation())
-		{
+		switch (reqMsg.getOperation()) {
 		case SUBMIT_ORDER:
 			response = new CreateOrderOperation(inventoryRepository, orderRepository).execute(reqMsg);
 			break;
@@ -38,7 +37,7 @@ public class OrderProcessor {
 			response = new GetOrderOperation(orderRepository).execute(reqMsg);
 			break;
 		default:
-			LOG.warn("Received bad message: " + reqMsg.getRequestId());
+			LOG.warn("Received bad message: {}", reqMsg.getRequestId());
 			throw new RuntimeException("Received bad message");
 		}
 

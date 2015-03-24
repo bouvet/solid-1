@@ -11,7 +11,12 @@ import no.bouvet.solid.srpdip.messageinterface.RequestMessage;
 import no.bouvet.solid.srpdip.messageinterface.ResponseMessage;
 import no.bouvet.solid.srpdip.messageinterface.ResponseMessageFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class CancelOrderOperation implements OrderOperation {
+
+	private static final Logger LOG = LoggerFactory.getLogger(CancelOrderOperation.class);
 
 	private InventoryRepository inventoryRepository;
 	private OrderRepository orderRepository;
@@ -28,8 +33,7 @@ public class CancelOrderOperation implements OrderOperation {
 		try {
 			Order orderToCancel = orderRepository.orders.get(request.getOrderId());
 
-			switch (orderToCancel.getState())
-			{
+			switch (orderToCancel.getState()) {
 			case SHIPPED:
 				// msg cannot cancel shipped order
 				return responseMessageFactory.createCancellationResponseMessage(request, orderToCancel,
@@ -38,13 +42,11 @@ public class CancelOrderOperation implements OrderOperation {
 				return responseMessageFactory.createCancellationResponseMessage(request, orderToCancel,
 						"Order has already been cancelled.");
 			default:
-				for (OrderItem item : orderToCancel.getOrderItems())
-				{
+				for (OrderItem item : orderToCancel.getOrderItems()) {
 					InventoryItem inventoryItem = inventoryRepository.inventory.get(item.getItemCode());
 
 					if (item.getState() == OrderItemState.FILLED)
-						inventoryItem.setQuantityOnHand(
-								inventoryItem.getQuantityOnHand() + item.getQuantity());
+						inventoryItem.setQuantityOnHand(inventoryItem.getQuantityOnHand() + item.getQuantity());
 
 					item.setState(OrderItemState.CANCELLED);
 				}
@@ -61,10 +63,8 @@ public class CancelOrderOperation implements OrderOperation {
 						"Order has been cancelled and reserved inventory has been released.");
 			}
 		} catch (Exception ex) {
-			// Trace.WriteLine("Exception during operation CancelOrder: " + ex,
-			// "CancelOrderError");
+			LOG.error("Exception during operation CancelOrder: ", ex);
 			return responseMessageFactory.createErrorResponseMessage(request.getRequestId(), ex);
 		}
 	}
-
 }

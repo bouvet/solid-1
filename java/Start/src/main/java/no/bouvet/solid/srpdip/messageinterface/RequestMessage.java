@@ -8,7 +8,6 @@ import no.bouvet.solid.srpdip.domain.Address;
 import no.bouvet.solid.srpdip.domain.ContactInformation;
 import no.bouvet.solid.srpdip.domain.OrderItem;
 
-
 @XmlRootElement
 public class RequestMessage {
 	private long requestId;

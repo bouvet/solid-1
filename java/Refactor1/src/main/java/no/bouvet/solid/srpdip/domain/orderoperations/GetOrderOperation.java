@@ -6,7 +6,12 @@ import no.bouvet.solid.srpdip.messageinterface.RequestMessage;
 import no.bouvet.solid.srpdip.messageinterface.ResponseMessage;
 import no.bouvet.solid.srpdip.messageinterface.ResponseMessageFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class GetOrderOperation implements OrderOperation {
+
+	private static final Logger LOG = LoggerFactory.getLogger(GetOrderOperation.class);
 
 	private OrderRepository orderRepository;
 
@@ -23,8 +28,7 @@ public class GetOrderOperation implements OrderOperation {
 
 			return responseMessageFactory.createOrderQueryResponseMessage(request, orderToGet);
 		} catch (Exception ex) {
-			// Trace.WriteLine("Exception during operation GetOrderDetails: " +
-			// ex, "GetOrderDetailsError");
+			LOG.error("Exception during operation GetOrderDetails: ", ex);
 			return responseMessageFactory.createErrorResponseMessage(request.getRequestId(), ex);
 		}
 	}

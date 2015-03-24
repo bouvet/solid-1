@@ -4,56 +4,52 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Map;
 
-import com.thoughtworks.xstream.XStream;
-
 import no.bouvet.solid.srpdip.domain.Order;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.thoughtworks.xstream.XStream;
 
 public class OrderRepository {
 
+	private static final Logger LOG = LoggerFactory.getLogger(OrderRepository.class);
+
 	private static final String ORDER_FILE_NAME = "orderFile.xml";
-	
+
 	private long lastOrderId = 0;
-	
+
 	public Map<Long, Order> orders;
 
-	public OrderRepository()
-	{
+	public OrderRepository() {
 		readOrdersFromFile();
-		lastOrderId = orders.values().stream()
-				.mapToLong(Order::getOrderId)
-				.max()
-				.orElse(0);
+		lastOrderId = orders.values().stream().mapToLong(Order::getOrderId).max().orElse(0);
 	}
-	
+
 	public Order createOrder() {
 		return new Order(++lastOrderId);
 	}
 
-    public void updateOrders()
-    {
-        writeOrdersToFile();
-    }
+	public void updateOrders() {
+		writeOrdersToFile();
+	}
 
 	@SuppressWarnings("unchecked")
-	private void readOrdersFromFile()
-	{
+	private void readOrdersFromFile() {
 		try {
 			orders = (Map<Long, Order>) new XStream().fromXML(getClass().getClassLoader().getResourceAsStream(ORDER_FILE_NAME));
 		} catch (Exception ex) {
-			// Trace.WriteLine("Exception while trying to read orders from file: "
-			// + ex, "OrderError");
-			//throw ex;
+			LOG.error("Exception while trying to read orders from file: ", ex);
+			// throw ex;
 		}
 	}
 
-	private void writeOrdersToFile()
-	{
+	private void writeOrdersToFile() {
 		try {
 			new XStream().toXML(orders, new FileOutputStream(new File(ORDER_FILE_NAME)));
 		} catch (Exception ex) {
-			// Trace.WriteLine("Exception while trying to write orders to file: "
-			// + ex, "OrdersError");
-			//throw ex;
+			LOG.error("Exception while trying to write orders to file: ", ex);
+			// throw ex;
 		}
 	}
 

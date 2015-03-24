@@ -1,12 +1,11 @@
 package no.bouvet.solid.srpdip.messageinterface;
 
-
 public class OrderCancellationResponse extends ResponseMessage {
 	private long orderId;
 	public String orderState;
 	public String message;
 
-	public OrderCancellationResponse(long requestId, long orderId, String OrderState, String message) {
+	public OrderCancellationResponse(long requestId, long orderId, String orderState, String message) {
 		super(requestId);
 		this.orderId = orderId;
 		this.orderState = orderState;
