@@ -12,8 +12,7 @@ public class GetOrderOperation implements OrderOperation {
 	public static Factory<GetOrderOperation> factory = new Factory<>(GetOrderOperation.class);
 
 	private OrderRepository orderRepository = OrderRepository.factory.getInstance();
-
-	private ResponseMessageFactory responseMessageFactory = new ResponseMessageFactory();
+	private ResponseMessageFactory responseMessageFactory = ResponseMessageFactory.factory.getInstance();
 
 	@Override
 	public ResponseMessage execute(RequestMessage request) {

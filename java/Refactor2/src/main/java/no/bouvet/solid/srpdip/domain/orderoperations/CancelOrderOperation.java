@@ -18,8 +18,7 @@ public class CancelOrderOperation  implements OrderOperation{
 	
 	private InventoryRepository inventoryRepository = InventoryRepository.factory.getInstance();
 	private OrderRepository orderRepository = OrderRepository.factory.getInstance();
-
-	private ResponseMessageFactory responseMessageFactory = new ResponseMessageFactory();
+	private ResponseMessageFactory responseMessageFactory = ResponseMessageFactory.factory.getInstance();
 	
 	@Override
 	public ResponseMessage execute(RequestMessage request) {
