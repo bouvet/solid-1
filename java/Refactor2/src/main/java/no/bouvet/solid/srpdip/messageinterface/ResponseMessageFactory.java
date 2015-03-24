@@ -21,11 +21,6 @@ public class ResponseMessageFactory {
 				message);
 	}
 
-	public ResponseMessage createErrorResponseMessage(long requestId, Exception ex)
-	{
-		return new ResponseMessage(requestId);
-	}
-
 	public ResponseMessage createOrderSubmissionResponseMessage(RequestMessage reqMsg, Order order)
 	{
 		return new OrderSubmissionResponse(

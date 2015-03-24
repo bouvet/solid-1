@@ -87,14 +87,13 @@ public class OrderProcessor {
 		case CANCELLED:
 			return createCancellationResponseMessage(reqMsg, orderToCancel, "Order has already been cancelled.");
 		default:
-			for (OrderItem item : orderToCancel.getOrderItems()) {
-				InventoryItem inventoryItem = inventory.get(item.getItemCode());
-
-				if (item.getState() == OrderItemState.FILLED)
+			orderToCancel.getOrderItems().forEach(item -> {
+				if (item.getState() == OrderItemState.FILLED) {
+					InventoryItem inventoryItem = inventory.get(item.getItemCode());
 					inventoryItem.setQuantityOnHand(inventoryItem.getQuantityOnHand() + item.getQuantity());
-
+				}
 				item.setState(OrderItemState.CANCELLED);
-			}
+			});
 
 			orderToCancel.setState(OrderState.CANCELLED);
 
@@ -119,7 +118,7 @@ public class OrderProcessor {
 
 		order.getOrderItems().addAll(reqMsg.getOrderItems());
 
-		for (OrderItem item : order.getOrderItems()) {
+		order.getOrderItems().forEach(item -> {
 			InventoryItem inventoryItem = inventory.get(item.getItemCode());
 
 			if (inventoryItem.getQuantityOnHand() <= item.getQuantity()) {
@@ -132,9 +131,10 @@ public class OrderProcessor {
 			} else {
 				item.setState(OrderItemState.NOT_ENOUGH_QUANTITY_ON_HAND);
 			}
-		}
+		});
 
-		order.setState(order.getOrderItems().stream().allMatch(o -> o.getState() == OrderItemState.FILLED) ? OrderState.FILLED
+		order.setState(order.getOrderItems().stream().allMatch(o -> o.getState() == OrderItemState.FILLED) 
+				? OrderState.FILLED
 				: OrderState.PROCESSING);
 
 		orders.put(order.getOrderId(), order);

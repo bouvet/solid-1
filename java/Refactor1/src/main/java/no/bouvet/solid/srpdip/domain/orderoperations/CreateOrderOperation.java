@@ -4,7 +4,6 @@ import no.bouvet.solid.srpdip.InventoryRepository;
 import no.bouvet.solid.srpdip.OrderRepository;
 import no.bouvet.solid.srpdip.domain.InventoryItem;
 import no.bouvet.solid.srpdip.domain.Order;
-import no.bouvet.solid.srpdip.domain.OrderItem;
 import no.bouvet.solid.srpdip.domain.OrderItemState;
 import no.bouvet.solid.srpdip.domain.OrderState;
 import no.bouvet.solid.srpdip.domain.revenue.PriceCalculator;
@@ -32,7 +31,7 @@ public class CreateOrderOperation implements OrderOperation {
 
 		order.getOrderItems().addAll(request.getOrderItems());
 
-		for (OrderItem item : order.getOrderItems()) {
+		order.getOrderItems().forEach(item -> {
 			InventoryItem inventoryItem = inventoryRepository.inventory.get(item.getItemCode());
 
 			if (inventoryItem.getQuantityOnHand() <= item.getQuantity()) {
@@ -45,9 +44,10 @@ public class CreateOrderOperation implements OrderOperation {
 			} else {
 				item.setState(OrderItemState.NOT_ENOUGH_QUANTITY_ON_HAND);
 			}
-		}
+		});
 
-		order.setState(order.getOrderItems().stream().allMatch(o -> o.getState() == OrderItemState.FILLED) ? OrderState.FILLED
+		order.setState(order.getOrderItems().stream().allMatch(o -> o.getState() == OrderItemState.FILLED) 
+				? OrderState.FILLED
 				: OrderState.PROCESSING);
 
 		orderRepository.orders.put(order.getOrderId(), order);

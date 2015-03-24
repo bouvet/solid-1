@@ -5,7 +5,6 @@ import no.bouvet.solid.srpdip.InventoryRepository;
 import no.bouvet.solid.srpdip.OrderRepository;
 import no.bouvet.solid.srpdip.domain.InventoryItem;
 import no.bouvet.solid.srpdip.domain.Order;
-import no.bouvet.solid.srpdip.domain.OrderItem;
 import no.bouvet.solid.srpdip.domain.OrderItemState;
 import no.bouvet.solid.srpdip.domain.OrderState;
 import no.bouvet.solid.srpdip.messageinterface.RequestMessage;
@@ -33,14 +32,13 @@ public class CancelOrderOperation implements OrderOperation {
 			return responseMessageFactory.createCancellationResponseMessage(request, orderToCancel,
 					"Order has already been cancelled.");
 		default:
-			for (OrderItem item : orderToCancel.getOrderItems()) {
-				InventoryItem inventoryItem = inventoryRepository.inventory.get(item.getItemCode());
-
-				if (item.getState() == OrderItemState.FILLED)
+			orderToCancel.getOrderItems().forEach(item -> {
+				if (item.getState() == OrderItemState.FILLED) {
+					InventoryItem inventoryItem = inventoryRepository.inventory.get(item.getItemCode());
 					inventoryItem.setQuantityOnHand(inventoryItem.getQuantityOnHand() + item.getQuantity());
-
+				}
 				item.setState(OrderItemState.CANCELLED);
-			}
+			});
 
 			orderToCancel.setState(OrderState.CANCELLED);
 
