@@ -1,12 +1,15 @@
 package no.bouvet.solid.srpdip.domain.revenue;
 
+import no.bouvet.solid.srpdip.Factory;
 import no.bouvet.solid.srpdip.domain.InventoryItem;
 import no.bouvet.solid.srpdip.domain.OrderItem;
 
 public class Buy2Get1FreePricingCalculation implements PricingCalculation {
 
+	public static Factory<Buy2Get1FreePricingCalculation> factory = new Factory<>(Buy2Get1FreePricingCalculation.class);
+
 	@Override
-	public void calculatePrice(OrderItem item, InventoryItem inventoryItem) {
+	public void calculate(OrderItem item, InventoryItem inventoryItem) {
 		item.setWeightPerUnit(inventoryItem.getWeightPerUnit());
 		item.setPricePerUnit(inventoryItem.getPricePerUnit());
 		item.setRebatePerUnit(0);

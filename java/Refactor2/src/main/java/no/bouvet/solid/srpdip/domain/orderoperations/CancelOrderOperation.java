@@ -12,7 +12,7 @@ import no.bouvet.solid.srpdip.messageinterface.RequestMessage;
 import no.bouvet.solid.srpdip.messageinterface.ResponseMessage;
 import no.bouvet.solid.srpdip.messageinterface.ResponseMessageFactory;
 
-public class CancelOrderOperation {
+public class CancelOrderOperation  implements OrderOperation{
 
 	public static Factory<CancelOrderOperation> factory = new Factory<>(CancelOrderOperation.class);
 	
@@ -20,8 +20,9 @@ public class CancelOrderOperation {
 	private OrderRepository orderRepository = OrderRepository.factory.getInstance();
 
 	private ResponseMessageFactory responseMessageFactory = new ResponseMessageFactory();
-
-	public ResponseMessage executeOperation(RequestMessage request) {
+	
+	@Override
+	public ResponseMessage execute(RequestMessage request) {
 		try {
 			Order orderToCancel = orderRepository.orders.get(request.getOrderId());
 

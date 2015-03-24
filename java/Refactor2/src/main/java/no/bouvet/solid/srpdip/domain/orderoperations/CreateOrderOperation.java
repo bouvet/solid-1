@@ -13,17 +13,17 @@ import no.bouvet.solid.srpdip.messageinterface.RequestMessage;
 import no.bouvet.solid.srpdip.messageinterface.ResponseMessage;
 import no.bouvet.solid.srpdip.messageinterface.ResponseMessageFactory;
 
-public class CreateOrderOperation {
+public class CreateOrderOperation implements OrderOperation {
 
 	public static Factory<CreateOrderOperation> factory = new Factory<>(CreateOrderOperation.class);
 
 	private InventoryRepository inventoryRepository = InventoryRepository.factory.getInstance();
 	private OrderRepository orderRepository = OrderRepository.factory.getInstance();
 	private ResponseMessageFactory responseMessageFactory = ResponseMessageFactory.factory.getInstance();
+	private PriceCalculator priceCalculator = PriceCalculator.factory.getInstance();
 
-	private PriceCalculator priceCalculator = new PriceCalculator();
-
-	public ResponseMessage executeOperation(RequestMessage request) {
+	@Override
+	public ResponseMessage execute(RequestMessage request) {
 		try {
 			Order order = orderRepository.createOrder();
 
@@ -38,7 +38,7 @@ public class CreateOrderOperation {
 					inventoryItem.setQuantityOnHand(inventoryItem.getQuantityOnHand() - item.getQuantity());
 					item.setWeight(item.getWeightPerUnit() * (float) item.getQuantity());
 
-					priceCalculator.calculatePrice(item, inventoryItem);
+					priceCalculator.calculate(item, inventoryItem);
 
 					item.setState(OrderItemState.FILLED);
 				}
@@ -68,5 +68,4 @@ public class CreateOrderOperation {
 			return responseMessageFactory.createErrorResponseMessage(request.getRequestId(), ex);
 		}
 	}
-
 }

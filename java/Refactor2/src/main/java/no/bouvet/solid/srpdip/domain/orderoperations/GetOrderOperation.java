@@ -7,7 +7,7 @@ import no.bouvet.solid.srpdip.messageinterface.RequestMessage;
 import no.bouvet.solid.srpdip.messageinterface.ResponseMessage;
 import no.bouvet.solid.srpdip.messageinterface.ResponseMessageFactory;
 
-public class GetOrderOperation {
+public class GetOrderOperation implements OrderOperation {
 
 	public static Factory<GetOrderOperation> factory = new Factory<>(GetOrderOperation.class);
 
@@ -15,7 +15,8 @@ public class GetOrderOperation {
 
 	private ResponseMessageFactory responseMessageFactory = new ResponseMessageFactory();
 
-	public ResponseMessage executeOperation(RequestMessage request) {
+	@Override
+	public ResponseMessage execute(RequestMessage request) {
 		try {
 			Order orderToGet = orderRepository.orders.get(request.getOrderId());
 

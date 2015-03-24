@@ -1,26 +1,29 @@
 package no.bouvet.solid.srpdip.domain.revenue;
 
+import no.bouvet.solid.srpdip.Factory;
 import no.bouvet.solid.srpdip.domain.InventoryItem;
 import no.bouvet.solid.srpdip.domain.OrderItem;
 
 public class PriceCalculator
 {
-    public void calculatePrice(OrderItem item, InventoryItem inventoryItem)
+	public static Factory<PriceCalculator> factory = new Factory<>(PriceCalculator.class);
+	
+    public void calculate(OrderItem item, InventoryItem inventoryItem)
     {
         PricingCalculation pricingCalculation;
 
         switch (inventoryItem.getPricingCalculation())
         {
             case "FULLQUANTITY":
-                pricingCalculation = new FullQuantityPricingCalculation();
+                pricingCalculation = FullQuantityPricingCalculation.factory.getInstance();
                 break;
             case "BUY2GET1FREE":
-                pricingCalculation = new Buy2Get1FreePricingCalculation();
+                pricingCalculation = Buy2Get1FreePricingCalculation.factory.getInstance();
                 break;
             default:
                 throw new RuntimeException("Invalid pricing calculation type: " + inventoryItem.getPricingCalculation());
         }
 
-        pricingCalculation.calculatePrice(item, inventoryItem);
+        pricingCalculation.calculate(item, inventoryItem);
     }
 }
