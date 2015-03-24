@@ -13,12 +13,7 @@ import no.bouvet.solid.srpdip.messageinterface.RequestMessage;
 import no.bouvet.solid.srpdip.messageinterface.ResponseMessage;
 import no.bouvet.solid.srpdip.messageinterface.ResponseMessageFactory;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class CreateOrderOperation implements OrderOperation {
-
-	private static final Logger LOG = LoggerFactory.getLogger(CreateOrderOperation.class);
 
 	public static Factory<CreateOrderOperation> factory = new Factory<>(CreateOrderOperation.class);
 
@@ -29,41 +24,36 @@ public class CreateOrderOperation implements OrderOperation {
 
 	@Override
 	public ResponseMessage execute(RequestMessage request) {
-		try {
-			Order order = orderRepository.createOrder();
+		Order order = orderRepository.createOrder();
 
-			order.getOrderItems().addAll(request.getOrderItems());
+		order.getOrderItems().addAll(request.getOrderItems());
 
-			for (OrderItem item : order.getOrderItems()) {
-				InventoryItem inventoryItem = inventoryRepository.inventory.get(item.getItemCode());
+		for (OrderItem item : order.getOrderItems()) {
+			InventoryItem inventoryItem = inventoryRepository.inventory.get(item.getItemCode());
 
-				if (inventoryItem.getQuantityOnHand() <= item.getQuantity()) {
-					inventoryItem.setQuantityOnHand(inventoryItem.getQuantityOnHand() - item.getQuantity());
-					item.setWeight(item.getWeightPerUnit() * (float) item.getQuantity());
+			if (inventoryItem.getQuantityOnHand() <= item.getQuantity()) {
+				inventoryItem.setQuantityOnHand(inventoryItem.getQuantityOnHand() - item.getQuantity());
+				item.setWeight(item.getWeightPerUnit() * (float) item.getQuantity());
 
-					priceCalculator.calculate(item, inventoryItem);
+				priceCalculator.calculate(item, inventoryItem);
 
-					item.setState(OrderItemState.FILLED);
-				} else {
-					item.setState(OrderItemState.NOT_ENOUGH_QUANTITY_ON_HAND);
-				}
+				item.setState(OrderItemState.FILLED);
+			} else {
+				item.setState(OrderItemState.NOT_ENOUGH_QUANTITY_ON_HAND);
 			}
-
-			order.setState(order.getOrderItems().stream().allMatch(o -> o.getState() == OrderItemState.FILLED) ? OrderState.FILLED
-					: OrderState.PROCESSING);
-
-			orderRepository.orders.put(order.getOrderId(), order);
-
-			// save inventory
-			inventoryRepository.updateInventory();
-
-			// save order
-			orderRepository.updateOrders();
-
-			return responseMessageFactory.createOrderSubmissionResponseMessage(request, order);
-		} catch (Exception ex) {
-			LOG.error("Exception during operation SubmitOrder: ", ex);
-			return responseMessageFactory.createErrorResponseMessage(request.getRequestId(), ex);
 		}
+
+		order.setState(order.getOrderItems().stream().allMatch(o -> o.getState() == OrderItemState.FILLED) ? OrderState.FILLED
+				: OrderState.PROCESSING);
+
+		orderRepository.orders.put(order.getOrderId(), order);
+
+		// save inventory
+		inventoryRepository.updateInventory();
+
+		// save order
+		orderRepository.updateOrders();
+
+		return responseMessageFactory.createOrderSubmissionResponseMessage(request, order);
 	}
 }

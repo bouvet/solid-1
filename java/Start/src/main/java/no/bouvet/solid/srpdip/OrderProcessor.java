@@ -1,8 +1,9 @@
 package no.bouvet.solid.srpdip;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,8 +22,8 @@ import com.thoughtworks.xstream.XStream;
 
 public class OrderProcessor {
 
-	private static final String INVENTORY_FILE_NAME = "inventoryFile.xml";
-	private static final String ORDER_FILE_NAME = "orderFile.xml";
+	private static final String INVENTORY_FILE_NAME = "data/inventoryFile.xml";
+	private static final String ORDER_FILE_NAME = "data/orderFile.xml";
 
 	private Map<Long, ResponseMessage> processedMessages = new HashMap<>();
 	private Map<String, InventoryItem> inventory;
@@ -33,7 +34,12 @@ public class OrderProcessor {
 	public OrderProcessor() {
 		readInventoryFromFile();
 		readOrdersFromFile();
-		lastOrderId = orders.values().stream().mapToLong(Order::getOrderId).max().orElse(0);
+
+		lastOrderId = orders.values()
+				.stream()
+				.mapToLong(Order::getOrderId)
+				.max()
+				.orElse(0);
 	}
 
 	public ResponseMessage processMessage(RequestMessage reqMsg) {
@@ -173,30 +179,27 @@ public class OrderProcessor {
 
 	@SuppressWarnings("unchecked")
 	private void readInventoryFromFile() {
-		inventory = (Map<String, InventoryItem>) new XStream().fromXML(getClass().getClassLoader().getResourceAsStream(
-				INVENTORY_FILE_NAME));
+		inventory = (Map<String, InventoryItem>) new XStream().fromXML(new File(INVENTORY_FILE_NAME));
 	}
 
 	private void writeInventoryToFile() {
-		try {
-			new XStream().toXML(inventory, new FileOutputStream(new File(INVENTORY_FILE_NAME)));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		try (OutputStream stream = new FileOutputStream(new File(INVENTORY_FILE_NAME))) {
+			new XStream().toXML(inventory, stream);
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to persist inventory: " + e.getMessage());
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	private void readOrdersFromFile() {
-		orders = (Map<Long, Order>) new XStream().fromXML(getClass().getClassLoader().getResourceAsStream(ORDER_FILE_NAME));
+		orders = (Map<Long, Order>) new XStream().fromXML(new File(ORDER_FILE_NAME));
 	}
 
 	private void writeOrdersToFile() {
-		try {
-			new XStream().toXML(orders, new FileOutputStream(new File(ORDER_FILE_NAME)));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		try (OutputStream stream = new FileOutputStream(new File(ORDER_FILE_NAME))) {
+			new XStream().toXML(orders, stream);
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to persist orders: " + e.getMessage());
 		}
 	}
 }

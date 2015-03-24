@@ -2,22 +2,19 @@ package no.bouvet.solid.srpdip;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Map;
 
 import no.bouvet.solid.srpdip.domain.Order;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.xstream.XStream;
 
 public class OrderRepository {
 
-	private static final Logger LOG = LoggerFactory.getLogger(OrderRepository.class);
-
 	public static Factory<OrderRepository> factory = new Factory<>(OrderRepository.class);
 
-	private static final String ORDER_FILE_NAME = "orderFile.xml";
+	private static final String ORDER_FILE_NAME = "data/orderFile.xml";
 
 	private long lastOrderId = 0;
 
@@ -25,7 +22,12 @@ public class OrderRepository {
 
 	public OrderRepository() {
 		readOrdersFromFile();
-		lastOrderId = orders.values().stream().mapToLong(Order::getOrderId).max().orElse(0);
+		
+		lastOrderId = orders.values()
+				.stream()
+				.mapToLong(Order::getOrderId)
+				.max()
+				.orElse(0);
 	}
 
 	public Order createOrder() {
@@ -38,20 +40,14 @@ public class OrderRepository {
 
 	@SuppressWarnings("unchecked")
 	private void readOrdersFromFile() {
-		try {
-			orders = (Map<Long, Order>) new XStream().fromXML(getClass().getClassLoader().getResourceAsStream(ORDER_FILE_NAME));
-		} catch (Exception ex) {
-			LOG.error("Exception while trying to read orders from file: ", ex);
-			// throw ex;
-		}
+		orders = (Map<Long, Order>) new XStream().fromXML(new File(ORDER_FILE_NAME));
 	}
 
 	private void writeOrdersToFile() {
-		try {
-			new XStream().toXML(orders, new FileOutputStream(new File(ORDER_FILE_NAME)));
-		} catch (Exception ex) {
-			LOG.error("Exception while trying to write orders to file: ", ex);
-			// throw ex;
+		try (OutputStream stream = new FileOutputStream(new File(ORDER_FILE_NAME))) {
+			new XStream().toXML(orders, stream);
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to persist orders: " + e.getMessage());
 		}
 	}
 
