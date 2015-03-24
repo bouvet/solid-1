@@ -1,0 +1,5 @@
+{
+  "requestId": 6, 
+  "operation": "GET_ORDER_DETAILS",
+  "orderId": 1024
+}
