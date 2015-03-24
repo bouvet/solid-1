@@ -32,7 +32,7 @@ public class InventoryRepository {
 	}
 
 	private void writeInventoryToFile() {
-		try (OutputStream stream = new FileOutputStream(new File(INVENTORY_FILE_NAME))) {
+		try (OutputStream stream = new FileOutputStream(INVENTORY_FILE_NAME)) {
 			new XStream().toXML(inventory, stream);
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to persist inventory: " + e.getMessage());

@@ -42,7 +42,7 @@ public class OrderRepository {
 	}
 
 	private void writeOrdersToFile() {
-		try (OutputStream stream = new FileOutputStream(new File(ORDER_FILE_NAME))) {
+		try (OutputStream stream = new FileOutputStream(ORDER_FILE_NAME)) {
 			new XStream().toXML(orders, stream);
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to persist orders: " + e.getMessage());
