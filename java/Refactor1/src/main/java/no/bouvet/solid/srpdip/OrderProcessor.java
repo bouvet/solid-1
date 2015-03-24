@@ -29,13 +29,13 @@ public class OrderProcessor {
 		switch (reqMsg.getOperation())
 		{
 		case SUBMIT_ORDER:
-			response = new CreateOrderOperation(inventoryRepository, orderRepository).executeOperation(reqMsg);
+			response = new CreateOrderOperation(inventoryRepository, orderRepository).execute(reqMsg);
 			break;
 		case CANCEL_ORDER:
-			response = new CancelOrderOperation(inventoryRepository, orderRepository).executeOperation(reqMsg);
+			response = new CancelOrderOperation(inventoryRepository, orderRepository).execute(reqMsg);
 			break;
 		case GET_ORDER_DETAILS:
-			response = new GetOrderOperation(orderRepository).executeOperation(reqMsg);
+			response = new GetOrderOperation(orderRepository).execute(reqMsg);
 			break;
 		default:
 			LOG.warn("Received bad message: " + reqMsg.getRequestId());

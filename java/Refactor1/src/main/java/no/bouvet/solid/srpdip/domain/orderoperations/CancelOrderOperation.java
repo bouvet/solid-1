@@ -24,7 +24,7 @@ public class CancelOrderOperation implements OrderOperation {
 	}
 
 	@Override
-	public ResponseMessage executeOperation(RequestMessage request) {
+	public ResponseMessage execute(RequestMessage request) {
 		try {
 			Order orderToCancel = orderRepository.orders.get(request.getOrderId());
 

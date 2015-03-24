@@ -5,5 +5,5 @@ import no.bouvet.solid.srpdip.messageinterface.ResponseMessage;
 
 public interface OrderOperation
 {
-    ResponseMessage executeOperation(RequestMessage request);
+    ResponseMessage execute(RequestMessage request);
 }

@@ -5,7 +5,7 @@ import no.bouvet.solid.srpdip.domain.OrderItem;
 
 public class PriceCalculator
 {
-    public void calculatePrice(OrderItem item, InventoryItem inventoryItem)
+    public void calculate(OrderItem item, InventoryItem inventoryItem)
     {
         PricingCalculation pricingCalculation;
 
@@ -21,6 +21,6 @@ public class PriceCalculator
                 throw new RuntimeException("Invalid pricing calculation type: " + inventoryItem.getPricingCalculation());
         }
 
-        pricingCalculation.calculatePrice(item, inventoryItem);
+        pricingCalculation.calculate(item, inventoryItem);
     }
 }

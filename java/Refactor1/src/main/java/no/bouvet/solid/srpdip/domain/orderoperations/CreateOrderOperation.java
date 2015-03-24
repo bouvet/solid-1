@@ -27,7 +27,7 @@ public class CreateOrderOperation implements OrderOperation {
 	}
 
 	@Override
-	public ResponseMessage executeOperation(RequestMessage request) {
+	public ResponseMessage execute(RequestMessage request) {
 		try {
 			Order order = orderRepository.createOrder();
 
@@ -42,7 +42,7 @@ public class CreateOrderOperation implements OrderOperation {
 					inventoryItem.setQuantityOnHand(inventoryItem.getQuantityOnHand() - item.getQuantity());
 					item.setWeight(item.getWeightPerUnit() * (float) item.getQuantity());
 
-					priceCalculator.calculatePrice(item, inventoryItem);
+					priceCalculator.calculate(item, inventoryItem);
 
 					item.setState(OrderItemState.FILLED);
 				}
