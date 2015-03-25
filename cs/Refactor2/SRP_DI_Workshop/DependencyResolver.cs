@@ -14,7 +14,9 @@ namespace SRP_DI_Workshop
         private readonly Deduplicator _deduplicatorInstance;
         private readonly OrderProcessor _orderProcessorInstance;
         private readonly OrderRepository _orderRepositoryInstance;
-        private readonly Inventoryrepository _inventoryServiceInstance;
+        private readonly InventoryRepository _inventoryServiceInstance;
+        private readonly PricingCalculationFactory _pricingCalculationFactoryInstance;
+        private readonly OrderOperationFactory _orderOperationFactoryInstance;
 
         public DependencyResolver()
         {
@@ -31,30 +33,60 @@ namespace SRP_DI_Workshop
                 {typeof(CreateOrderOperation), ResolveCreateOrderOperation},
                 {typeof(Buy2Get1FreePricingCalculation), ResolveBuy2Get1FreePricingCalculation},
                 {typeof(FullQuantityPricingCalculation), ResolveFullQuantityPricingCalculation},
-                {typeof(IPriceCalculator), ResolvePriceCalculator}
+                {typeof(IPriceCalculator), ResolvePriceCalculator},
+                {typeof(IPricingCalculationFactory), ResolvePricingCalculationFactory},
+                {typeof(IOrderOperationFactory), ResolveOrderOperationFactory},
+                {typeof(IEnumerable<IOrderOperation>), ResolveAllOrderOperations}
             };
 
             _responseMessageFactoryInstance = new ResponseMessageFactory();
             _deduplicatorInstance = new Deduplicator();
-            _orderProcessorInstance = new OrderProcessor(Resolve<IResponseMessageFactory>(), Resolve<ILoggerService>(), Resolve<IDeduplicator>(), this);
             _orderRepositoryInstance = new OrderRepository(Resolve<ILoggerService>());
-            _inventoryServiceInstance = new Inventoryrepository(Resolve<ILoggerService>());
+            _inventoryServiceInstance = new InventoryRepository(Resolve<ILoggerService>());
+            _pricingCalculationFactoryInstance = new PricingCalculationFactory(this);
+            _orderOperationFactoryInstance = new OrderOperationFactory(Resolve<IEnumerable<IOrderOperation>>());
+            _orderProcessorInstance = new OrderProcessor(Resolve<IResponseMessageFactory>(), Resolve<ILoggerService>(), Resolve<IDeduplicator>(), Resolve<IOrderOperationFactory>());
         }
 
         public T Resolve<T>()
         {
+            return (T) Resolve(typeof (T));
+        }
+
+        public object Resolve(Type type)
+        {
             Func<object> objectFactory;
 
-            if (_objectFactories.TryGetValue(typeof (T), out objectFactory)
+            if (_objectFactories.TryGetValue(type, out objectFactory)
                 && objectFactory != null)
             {
                 object resolvedObject = objectFactory();
 
                 if (resolvedObject != null)
-                    return (T) resolvedObject;
+                    return resolvedObject;
             }
-            
-            throw new ArgumentOutOfRangeException(string.Format("Failed to resolve type [{0}]", typeof(T)));
+
+            throw new ArgumentOutOfRangeException(string.Format("Failed to resolve type [{0}]", type));
+        }
+
+        private IEnumerable<IOrderOperation> ResolveAllOrderOperations()
+        {
+            return new IOrderOperation[]
+            {
+                Resolve<CancelOrderOperation>(),
+                Resolve<GetOrderOperation>(),
+                Resolve<CreateOrderOperation>()
+            };
+        }
+
+        private IOrderOperationFactory ResolveOrderOperationFactory()
+        {
+            return _orderOperationFactoryInstance;
+        }
+
+        private IPricingCalculationFactory ResolvePricingCalculationFactory()
+        {
+            return _pricingCalculationFactoryInstance;
         }
 
         private OrderProcessor ResolveOrderProcessor()
@@ -89,7 +121,7 @@ namespace SRP_DI_Workshop
 
         private IPriceCalculator ResolvePriceCalculator()
         {
-            return new PriceCalculator(this);
+            return new PriceCalculator(Resolve<IPricingCalculationFactory>());
         }
 
         private FullQuantityPricingCalculation ResolveFullQuantityPricingCalculation()

@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependencyResolver.cs" />
     <Compile Include="Domain\OrderOperations\CancelOrderOperation.cs" />
     <Compile Include="Domain\OrderOperations\CreateOrderOperation.cs" />
     <Compile Include="Deduplicator.cs" />
@@ -69,12 +70,19 @@
     <Compile Include="Domain\InventoryItem.cs" />
     <Compile Include="Domain\Revenue\FullQuantityPricingCalculation.cs" />
     <Compile Include="Domain\OrderOperations\GetOrderOperation.cs" />
+    <Compile Include="Domain\Revenue\IPriceCalculator.cs" />
+    <Compile Include="IDeduplicator.cs" />
+    <Compile Include="IDependencyResolver.cs" />
+    <Compile Include="IInventoryRepository.cs" />
+    <Compile Include="ILoggerService.cs" />
     <Compile Include="InventoryRepository.cs" />
     <Compile Include="Domain\Revenue\IPricingCalculation.cs" />
     <Compile Include="Domain\OrderOperations\IOrderOperation.cs" />
+    <Compile Include="IOrderRepository.cs" />
     <Compile Include="LoggerService.cs" />
     <Compile Include="OrderRepository.cs" />
     <Compile Include="Domain\Revenue\PriceCalculator.cs" />
+    <Compile Include="ServiceInterface\IResponseMessageFactory.cs" />
     <Compile Include="ServiceInterface\ResponseMessageFactory.cs" />
     <Compile Include="ServiceInterface\MessageProcessor.cs" />
     <Compile Include="ServiceInterface\Operation.cs" />

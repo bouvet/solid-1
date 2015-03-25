@@ -8,18 +8,28 @@ using SRP_DI_Workshop.Domain;
 
 namespace SRP_DI_Workshop
 {
-    public class InventoryRepository
+    public class InventoryRepository : IInventoryRepository
     {
         private const string InventoryFileName = "data\\inventoryFile.xml";
         private readonly LoggerService _loggerService = new LoggerService();
 
-        public readonly Dictionary<string, InventoryItem> Inventory;
+        private readonly Dictionary<string, InventoryItem> _inventory;
 
         public InventoryRepository()
         {
             InventoryItem[] inventoryItems = ReadInventoryFromFile();
-            Inventory = inventoryItems.ToDictionary(i => i.ItemCode, i => i);
+            _inventory = inventoryItems.ToDictionary(i => i.ItemCode, i => i);
 
+        }
+
+        public InventoryItem GetInventoryItem(string code)
+        {
+            return _inventory[code];
+        }
+
+        public void UpdateInventory()
+        {
+            WriteInventoryToFile(_inventory.Select(kvp => kvp.Value).ToArray());
         }
 
         private InventoryItem[] ReadInventoryFromFile()
@@ -45,11 +55,6 @@ namespace SRP_DI_Workshop
             }
 
             return inventoryItems;
-        }
-
-        public void UpdateInventory()
-        {
-            WriteInventoryToFile(Inventory.Select(kvp => kvp.Value).ToArray());
         }
 
         private void WriteInventoryToFile(InventoryItem[] inventoryItems)

@@ -64,6 +64,8 @@
     <Compile Include="Domain\OrderOperations\CancelOrderOperation.cs" />
     <Compile Include="Domain\OrderOperations\CreateOrderOperation.cs" />
     <Compile Include="Deduplicator.cs" />
+    <Compile Include="Domain\OrderOperations\IOrderOperationFactory.cs" />
+    <Compile Include="Domain\OrderOperations\OrderOperationFactory.cs" />
     <Compile Include="Domain\Revenue\Buy2Get1FreeCalculator.cs" />
     <Compile Include="Domain\Address.cs" />
     <Compile Include="Domain\ContactInformation.cs" />
@@ -71,11 +73,13 @@
     <Compile Include="Domain\Revenue\FullQuantityPricingCalculation.cs" />
     <Compile Include="Domain\OrderOperations\GetOrderOperation.cs" />
     <Compile Include="Domain\Revenue\IPriceCalculator.cs" />
+    <Compile Include="Domain\Revenue\IPricingCalculationFactory.cs" />
+    <Compile Include="Domain\Revenue\PricingCalculationFactory.cs" />
     <Compile Include="IDeduplicator.cs" />
     <Compile Include="IDependencyResolver.cs" />
     <Compile Include="IInventoryRepository.cs" />
     <Compile Include="ILoggerService.cs" />
-    <Compile Include="Inventoryrepository.cs" />
+    <Compile Include="InventoryRepository.cs" />
     <Compile Include="Domain\Revenue\IPricingCalculation.cs" />
     <Compile Include="Domain\OrderOperations\IOrderOperation.cs" />
     <Compile Include="IOrderRepository.cs" />

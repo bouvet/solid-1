@@ -25,7 +25,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
 
                 foreach (OrderItem item in order.OrderItems)
                 {
-                    InventoryItem inventoryItem = InventoryRepository.Inventory[item.ItemCode];
+                    InventoryItem inventoryItem = InventoryRepository.GetInventoryItem(item.ItemCode);
 
                     if (item.Quantity <= inventoryItem.QuantityOnHand)
                     {
@@ -46,7 +46,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
                     ? OrderState.Filled
                     : OrderState.Processing;
 
-                OrderRepository.Orders.Add(order.OrderId, order);
+                OrderRepository.AddOrder(order);
 
                 // save inventory
                 InventoryRepository.UpdateInventory();

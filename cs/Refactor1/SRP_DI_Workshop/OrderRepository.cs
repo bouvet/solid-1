@@ -8,27 +8,37 @@ using SRP_DI_Workshop.Domain;
 
 namespace SRP_DI_Workshop
 {
-    public class OrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private const string OrderFileName = "data\\orderFile.xml";
         private long _lastOrderId;
 
-        private readonly LoggerService _loggerService = new LoggerService();
+        private readonly Dictionary<long, Order> _orders;
 
-        public Dictionary<long, Order> Orders;
+        private readonly LoggerService _loggerService = new LoggerService();
 
         public OrderRepository()
         {
             Order[] orders = ReadOrdersFromFile();
 
-            Orders = orders.ToDictionary(i => i.OrderId, i => i);
+            _orders = orders.ToDictionary(i => i.OrderId, i => i);
 
-            _lastOrderId = Orders.Max(o => o.Value.OrderId);
+            _lastOrderId = _orders.Max(o => o.Value.OrderId);
         }
 
         public Order CreateOrder()
         {
             return new Order { OrderId = ++_lastOrderId };
+        }
+
+        public Order GetOrder(long orderId)
+        {
+            return _orders[orderId];
+        }
+
+        public void AddOrder(Order order)
+        {
+            _orders.Add(order.OrderId, order);
         }
 
         private Order[] ReadOrdersFromFile()
@@ -58,7 +68,7 @@ namespace SRP_DI_Workshop
 
         public void UpdateOrders()
         {
-            WriteOrdersToFile(Orders.Select(o => o.Value).ToArray());
+            WriteOrdersToFile(_orders.Select(o => o.Value).ToArray());
         }
 
         private void WriteOrdersToFile(Order[] orders)

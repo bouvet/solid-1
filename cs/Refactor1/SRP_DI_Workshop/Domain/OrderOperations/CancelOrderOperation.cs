@@ -16,7 +16,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
         {
             try
             {
-                Order orderToCancel = OrderRepository.Orders[request.OrderId];
+                Order orderToCancel = OrderRepository.GetOrder(request.OrderId);
 
                 switch (orderToCancel.State)
                 {
@@ -30,7 +30,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
                     default:
                         foreach (OrderItem item in orderToCancel.OrderItems)
                         {
-                            InventoryItem inventoryItem = InventoryRepository.Inventory[item.ItemCode];
+                            InventoryItem inventoryItem = InventoryRepository.GetInventoryItem(item.ItemCode);
 
                             if (item.State == OrderItemState.Filled)
                                 inventoryItem.QuantityOnHand += item.Quantity;

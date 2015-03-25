@@ -2,7 +2,7 @@
 
 namespace SRP_DI_Workshop
 {
-    public class LoggerService
+    public class LoggerService : ILoggerService
     {
         public void WriteLine(string message, string category)
         {

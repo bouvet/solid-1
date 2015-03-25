@@ -4,7 +4,7 @@ using SRP_DI_Workshop.Domain;
 
 namespace SRP_DI_Workshop.ServiceInterface
 {
-    public class ResponseMessageFactory
+    public class ResponseMessageFactory : IResponseMessageFactory
     {
         public ResponseMessage CreateCancellationResponseMessage(RequestMessage reqMsg, Order orderToCancel, string message)
         {

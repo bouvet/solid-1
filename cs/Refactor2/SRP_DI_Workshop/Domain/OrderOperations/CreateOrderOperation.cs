@@ -25,9 +25,11 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
             _orderRepository = orderRepository;
             _loggerService = loggerService;
             _responseMessageFactory = responseMessageFactory;
+
+            Operation = Operation.SubmitOrder;
         }
 
-        public const Operation Id = Operation.SubmitOrder;
+        public Operation Operation { get; private set; }
 
         public ResponseMessage ExecuteOperation(RequestMessage request)
         {
@@ -39,7 +41,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
 
                 foreach (OrderItem item in order.OrderItems)
                 {
-                    InventoryItem inventoryItem = _inventoryService.Inventory[item.ItemCode];
+                    InventoryItem inventoryItem = _inventoryService.GetInventoryItem(item.ItemCode);
 
                     if (item.Quantity <= inventoryItem.QuantityOnHand)
                     {
@@ -60,7 +62,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
                     ? OrderState.Filled
                     : OrderState.Processing;
 
-                _orderRepository.Orders.Add(order.OrderId, order);
+                _orderRepository.AddOrder(order);
 
                 // save inventory
                 _inventoryService.UpdateInventory();

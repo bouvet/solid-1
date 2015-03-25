@@ -4,7 +4,7 @@ using SRP_DI_Workshop.ServiceInterface;
 
 namespace SRP_DI_Workshop
 {
-    public class Deduplicator
+    public class Deduplicator : IDeduplicator
     {
         private readonly Dictionary<Guid, ResponseMessage> _processedMessages = new Dictionary<Guid, ResponseMessage>();
 

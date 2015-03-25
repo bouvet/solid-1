@@ -15,7 +15,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
         {
             try
             {
-                Order orderToGet = OrderRepository.Orders[request.OrderId];
+                Order orderToGet = OrderRepository.GetOrder(request.OrderId);
 
                 return _responseMessageFactory.CreateOrderQueryResponseMessage(request, orderToGet);
             }

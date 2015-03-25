@@ -2,7 +2,7 @@
 
 namespace SRP_DI_Workshop.Domain.Revenue
 {
-    public class PriceCalculator
+    public class PriceCalculator : IPriceCalculator
     {
         public void CalculatePrice(OrderItem item, InventoryItem inventoryItem)
         {

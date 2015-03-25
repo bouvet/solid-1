@@ -5,8 +5,6 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
 {
     public class CancelOrderOperation : IOrderOperation
     {
-        public const Operation Id = Operation.CancelOrder;
-
         private readonly IInventoryRepository _inventoryService;
         private readonly IOrderRepository _orderRepository;
         private readonly ILoggerService _loggerService;
@@ -22,13 +20,17 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
             _loggerService = loggerService;
             _orderRepository = orderRepository;
             _inventoryService = inventoryService;
+
+            Operation = Operation.CancelOrder;
         }
+
+        public Operation Operation { get; private set; }
 
         public ResponseMessage ExecuteOperation(RequestMessage request)
         {
             try
             {
-                Order orderToCancel = _orderRepository.Orders[request.OrderId];
+                Order orderToCancel = _orderRepository.GetOrder(request.OrderId);
 
                 switch (orderToCancel.State)
                 {
@@ -42,7 +44,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
                     default:
                         foreach (OrderItem item in orderToCancel.OrderItems)
                         {
-                            InventoryItem inventoryItem = _inventoryService.Inventory[item.ItemCode];
+                            InventoryItem inventoryItem = _inventoryService.GetInventoryItem(item.ItemCode);
 
                             if (item.State == OrderItemState.Filled)
                                 inventoryItem.QuantityOnHand += item.Quantity;

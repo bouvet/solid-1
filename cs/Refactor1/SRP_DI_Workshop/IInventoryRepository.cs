@@ -5,7 +5,8 @@ namespace SRP_DI_Workshop
 {
     public interface IInventoryRepository
     {
-        IDictionary<string, InventoryItem> Inventory { get; }
+        InventoryItem GetInventoryItem(string code);
+
         void UpdateInventory();
     }
 }

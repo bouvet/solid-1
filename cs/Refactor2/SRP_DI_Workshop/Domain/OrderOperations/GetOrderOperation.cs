@@ -9,7 +9,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
         private readonly ILoggerService _loggerService;
         private readonly IResponseMessageFactory _responseMessageFactory;
 
-        public const Operation Id = Operation.GetOrderDetails;
+        public Operation Operation { get; private set; }
 
         public GetOrderOperation(
             IOrderRepository orderRepository,
@@ -19,13 +19,15 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
             _orderRepository = orderRepository;
             _loggerService = loggerService;
             _responseMessageFactory = responseMessageFactory;
+
+            Operation = Operation.GetOrderDetails;
         }
 
         public ResponseMessage ExecuteOperation(RequestMessage request)
         {
             try
             {
-                Order orderToGet = _orderRepository.Orders[request.OrderId];
+                Order orderToGet = _orderRepository.GetOrder(request.OrderId);
 
                 return _responseMessageFactory.CreateOrderQueryResponseMessage(request, orderToGet);
             }
