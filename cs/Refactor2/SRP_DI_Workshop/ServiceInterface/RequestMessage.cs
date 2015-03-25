@@ -6,7 +6,7 @@ namespace SRP_DI_Workshop.ServiceInterface
     [Serializable]
     public class RequestMessage
     {
-        public Guid RequestId { get; set; }
+        public long RequestId { get; set; }
         public Operation Operation { get; set; }
         public long AccountId { get; set; }
         public long OrderId { get; set; }

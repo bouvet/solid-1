@@ -21,7 +21,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
             _orderRepository = orderRepository;
             _inventoryService = inventoryService;
 
-            Operation = Operation.CancelOrder;
+            Operation = Operation.Cancel_Order;
         }
 
         public Operation Operation { get; private set; }

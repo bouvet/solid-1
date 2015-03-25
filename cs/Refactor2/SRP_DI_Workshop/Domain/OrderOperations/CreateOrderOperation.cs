@@ -26,7 +26,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
             _loggerService = loggerService;
             _responseMessageFactory = responseMessageFactory;
 
-            Operation = Operation.SubmitOrder;
+            Operation = Operation.Submit_Order;
         }
 
         public Operation Operation { get; private set; }

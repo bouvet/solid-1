@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using SRP_DI_Workshop.ServiceInterface;
 
@@ -6,9 +5,9 @@ namespace SRP_DI_Workshop
 {
     public class Deduplicator : IDeduplicator
     {
-        private readonly Dictionary<Guid, ResponseMessage> _processedMessages = new Dictionary<Guid, ResponseMessage>();
+        private readonly Dictionary<long, ResponseMessage> _processedMessages = new Dictionary<long, ResponseMessage>();
 
-        public ResponseMessage GetExistingResponseMessage(Guid requestId)
+        public ResponseMessage GetExistingResponseMessage(long requestId)
         {
             ResponseMessage responseToPreviousMessage;
 
@@ -17,7 +16,7 @@ namespace SRP_DI_Workshop
                 : null;
         }
 
-        public void StoreResponseToMessage(Guid requestId, ResponseMessage response)
+        public void StoreResponseToMessage(long requestId, ResponseMessage response)
         {
             _processedMessages[requestId] = response;
         }

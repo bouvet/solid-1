@@ -10,7 +10,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
         private readonly LoggerService _loggerService = new LoggerService();
         private readonly ResponseMessageFactory _responseMessageFactory = new ResponseMessageFactory();
 
-        public const Operation Id = Operation.CancelOrder;
+        public const Operation Id = Operation.Cancel_Order;
 
         public ResponseMessage ExecuteOperation(RequestMessage request)
         {

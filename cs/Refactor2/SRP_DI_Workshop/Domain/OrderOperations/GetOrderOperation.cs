@@ -20,7 +20,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
             _loggerService = loggerService;
             _responseMessageFactory = responseMessageFactory;
 
-            Operation = Operation.GetOrderDetails;
+            Operation = Operation.Get_Order_Details;
         }
 
         public ResponseMessage ExecuteOperation(RequestMessage request)

@@ -13,7 +13,7 @@ namespace SRP_DI_Workshop
 {
     public class OrderProcessor
     {
-        private readonly Dictionary<Guid, ResponseMessage> _processedMessages = new Dictionary<Guid, ResponseMessage>();
+        private readonly Dictionary<long, ResponseMessage> _processedMessages = new Dictionary<long, ResponseMessage>();
         private readonly Dictionary<string, InventoryItem> _inventory;
         private readonly Dictionary<long, Order> _orders;
 
@@ -43,13 +43,13 @@ namespace SRP_DI_Workshop
 
             switch (reqMsg.Operation)
             {
-                case Operation.SubmitOrder:
+                case Operation.Submit_Order:
                     response = CreateOrder(reqMsg);
                     break;
-                case Operation.CancelOrder:
+                case Operation.Cancel_Order:
                     response = CancelOrder(reqMsg);
                     break;
-                case Operation.GetOrderDetails:
+                case Operation.Get_Order_Details:
                     response = GetOrder(reqMsg);
                     break;
                 default:

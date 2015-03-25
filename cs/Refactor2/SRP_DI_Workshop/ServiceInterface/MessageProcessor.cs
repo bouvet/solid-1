@@ -11,22 +11,19 @@ namespace SRP_DI_Workshop.ServiceInterface
 {
     public class MessageProcessor : OwinMiddleware
     {
-        private static readonly IDependencyResolver DependencyResolver = new DependencyResolver();
-
-        private readonly OrderProcessor _processor;
+        private readonly IDependencyResolver _dependencyResolver = new DependencyResolver();
 
         public MessageProcessor(OwinMiddleware next)
             : base(next)
-        {
-            _processor = DependencyResolver.Resolve<OrderProcessor>();
-        }
+        { }
 
         public override Task Invoke(IOwinContext context)
         {
-            return Task.Run(() => ProcessMessage(context));
+            OrderProcessor processor = _dependencyResolver.Resolve<OrderProcessor>();
+            return Task.Run(() => ProcessMessage(context, processor));
         }
 
-        public void ProcessMessage(IOwinContext context)
+        public void ProcessMessage(IOwinContext context, OrderProcessor processor)
         {
             JsonSerializer serializer = new JsonSerializer();
             string requestBody;
@@ -50,21 +47,22 @@ namespace SRP_DI_Workshop.ServiceInterface
                 }
             }
 
-            ResponseMessage response = _processor.ProcessOrder(reqMsg);
+            ResponseMessage response = processor.ProcessOrder(reqMsg);
 
             WriteJsonResponse(context, serializer, response.StatusCode, response.ResponseBody);
         }
 
         private static void WriteJsonResponse(IOwinContext context, JsonSerializer serializer, HttpStatusCode statusCode, object message)
         {
+            context.Response.StatusCode = (int)statusCode;
+
             if (message != null)
             {
+                context.Response.Headers.Append("Content-Type", "application/json");
+
                 using (StreamWriter sw = new StreamWriter(context.Response.Body, Encoding.UTF8))
                     serializer.Serialize(sw, message);
             }
-
-            context.Response.Headers.Append("Content-Type", "application/json");
-            context.Response.StatusCode = (int)statusCode;
         }
     }
 }

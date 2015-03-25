@@ -13,7 +13,7 @@ namespace SRP_DI_Workshop.Domain.OrderOperations
         private readonly LoggerService _loggerService = new LoggerService();
         private readonly ResponseMessageFactory _responseMessageFactory = new ResponseMessageFactory();
 
-        public const Operation Id = Operation.SubmitOrder;
+        public const Operation Id = Operation.Submit_Order;
 
         public ResponseMessage ExecuteOperation(RequestMessage request)
         {

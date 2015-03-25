@@ -54,14 +54,15 @@ namespace SRP_DI_Workshop.ServiceInterface
 
         private static void WriteJsonResponse(IOwinContext context, JsonSerializer serializer, HttpStatusCode statusCode, object message)
         {
+            context.Response.StatusCode = (int)statusCode;
+
             if (message != null)
             {
+                context.Response.Headers.Append("Content-Type", "application/json");
+
                 using (StreamWriter sw = new StreamWriter(context.Response.Body, Encoding.UTF8))
                     serializer.Serialize(sw, message);
             }
-
-            context.Response.Headers.Append("Content-Type", "application/json");
-            context.Response.StatusCode = (int)statusCode;
         }
     }
 }
