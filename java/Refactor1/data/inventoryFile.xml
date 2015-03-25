@@ -1,28 +1,28 @@
 <map>
-  <entry>
-    <string>I1</string>
-    <no.bouvet.solid.srpdip.domain.InventoryItem>
-      <itemCode>I1</itemCode>
-      <pricingCalculation>FULLQUANTITY</pricingCalculation>
-      <unitName></unitName>
-      <weightPerUnit>0.25</weightPerUnit>
-      <pricePerUnit>1.0</pricePerUnit>
-      <rebatePerUnit>0.0</rebatePerUnit>
-      <quantityOnHand>98.0</quantityOnHand>
-      <vatRate>0.25</vatRate>
-    </no.bouvet.solid.srpdip.domain.InventoryItem>
-  </entry>
-  <entry>
-    <string>I2</string>
-    <no.bouvet.solid.srpdip.domain.InventoryItem>
-      <itemCode>I2</itemCode>
-      <pricingCalculation>BUY2GET1FREE</pricingCalculation>
-      <unitName></unitName>
-      <weightPerUnit>0.1</weightPerUnit>
-      <pricePerUnit>2.0</pricePerUnit>
-      <rebatePerUnit>0.0</rebatePerUnit>
-      <quantityOnHand>491.0</quantityOnHand>
-      <vatRate>0.25</vatRate>
-    </no.bouvet.solid.srpdip.domain.InventoryItem>
-  </entry>
+	<entry>
+		<string>I1</string>
+		<no.bouvet.solid.srpdip.domain.InventoryItem>
+			<itemCode>I1</itemCode>
+			<pricingCalculation>FULLQUANTITY</pricingCalculation>
+			<unitName />
+			<weightPerUnit>0.25</weightPerUnit>
+			<pricePerUnit>1</pricePerUnit>
+			<rebatePerUnit>0</rebatePerUnit>
+			<quantityOnHand>100</quantityOnHand>
+			<vatRate>0.25</vatRate>
+		</no.bouvet.solid.srpdip.domain.InventoryItem>
+	</entry>
+	<entry>
+		<string>I2</string>
+		<no.bouvet.solid.srpdip.domain.InventoryItem>
+			<itemCode>I2</itemCode>
+			<pricingCalculation>BUY2GET1FREE</pricingCalculation>
+			<unitName />
+			<weightPerUnit>0.1</weightPerUnit>
+			<pricePerUnit>2</pricePerUnit>
+			<rebatePerUnit>0</rebatePerUnit>
+			<quantityOnHand>500</quantityOnHand>
+			<vatRate>0.25</vatRate>
+		</no.bouvet.solid.srpdip.domain.InventoryItem>
+	</entry>
 </map>
