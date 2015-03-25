@@ -21,7 +21,7 @@ public class CancelOrderOperation implements OrderOperation {
 
 	@Override
 	public ResponseMessage execute(RequestMessage request) {
-		Order orderToCancel = orderRepository.orders.get(request.getOrderId());
+		Order orderToCancel = orderRepository.getOrder(request.getOrderId());
 
 		switch (orderToCancel.getState()) {
 		case SHIPPED:
@@ -34,7 +34,7 @@ public class CancelOrderOperation implements OrderOperation {
 		default:
 			orderToCancel.getOrderItems().forEach(item -> {
 				if (item.getState() == OrderItemState.FILLED) {
-					InventoryItem inventoryItem = inventoryRepository.inventory.get(item.getItemCode());
+					InventoryItem inventoryItem = inventoryRepository.getInventoryItem(item.getItemCode());
 					inventoryItem.setQuantityOnHand(inventoryItem.getQuantityOnHand() + item.getQuantity());
 				}
 				item.setState(OrderItemState.CANCELLED);

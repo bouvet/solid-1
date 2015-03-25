@@ -16,7 +16,7 @@ public class GetOrderOperation implements OrderOperation {
 
 	@Override
 	public ResponseMessage execute(RequestMessage request) {
-		Order orderToGet = orderRepository.orders.get(request.getOrderId());
+		Order orderToGet = orderRepository.getOrder(request.getOrderId());
 
 		return responseMessageFactory.createOrderQueryResponseMessage(request, orderToGet);
 	}

@@ -14,10 +14,14 @@ public class InventoryRepository {
 
 	private static final String INVENTORY_FILE_NAME = "data/inventoryFile.xml";
 
-	public Map<String, InventoryItem> inventory;
+	private Map<String, InventoryItem> inventory;
 
 	public InventoryRepository() {
 		readInventoryFromFile();
+	}
+	
+	public InventoryItem getInventoryItem(String code) {
+		return inventory.get(code);
 	}
 
 	public void updateInventory() {
@@ -25,13 +29,11 @@ public class InventoryRepository {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void readInventoryFromFile()
-	{
+	private void readInventoryFromFile() {
 		inventory = (Map<String, InventoryItem>) new XStream().fromXML(new File(INVENTORY_FILE_NAME));
 	}
 
-	private void writeInventoryToFile()
-	{
+	private void writeInventoryToFile() {
 		try (OutputStream stream = new FileOutputStream(INVENTORY_FILE_NAME)) {
 			new XStream().toXML(inventory, stream);
 		} catch (IOException e) {

@@ -18,7 +18,7 @@ public class OrderRepository {
 
 	private long lastOrderId = 0;
 
-	public Map<Long, Order> orders;
+	private Map<Long, Order> orders;
 
 	public OrderRepository() {
 		readOrdersFromFile();
@@ -32,6 +32,14 @@ public class OrderRepository {
 
 	public Order createOrder() {
 		return new Order(++lastOrderId);
+	}
+	
+	public void addOrder(Order order) {
+		orders.put(order.getOrderId(), order);
+	}
+
+	public Order getOrder(long orderId) {
+		return orders.get(orderId);
 	}
 
 	public void updateOrders() {
@@ -50,5 +58,4 @@ public class OrderRepository {
 			throw new RuntimeException("Failed to persist orders: " + e.getMessage());
 		}
 	}
-
 }

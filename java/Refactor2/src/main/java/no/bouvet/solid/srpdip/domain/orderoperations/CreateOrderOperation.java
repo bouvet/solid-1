@@ -28,7 +28,7 @@ public class CreateOrderOperation implements OrderOperation {
 		order.getOrderItems().addAll(request.getOrderItems());
 
 		order.getOrderItems().forEach(item -> {
-			InventoryItem inventoryItem = inventoryRepository.inventory.get(item.getItemCode());
+			InventoryItem inventoryItem = inventoryRepository.getInventoryItem(item.getItemCode());
 
 			if (inventoryItem.getQuantityOnHand() <= item.getQuantity()) {
 				inventoryItem.setQuantityOnHand(inventoryItem.getQuantityOnHand() - item.getQuantity());
@@ -46,7 +46,7 @@ public class CreateOrderOperation implements OrderOperation {
 				? OrderState.FILLED
 				: OrderState.PROCESSING);
 
-		orderRepository.orders.put(order.getOrderId(), order);
+		orderRepository.addOrder(order);
 
 		// save inventory
 		inventoryRepository.updateInventory();

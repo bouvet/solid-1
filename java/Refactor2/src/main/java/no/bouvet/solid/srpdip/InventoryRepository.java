@@ -16,10 +16,14 @@ public class InventoryRepository {
 
 	private static final String INVENTORY_FILE_NAME = "data/inventoryFile.xml";
 
-	public Map<String, InventoryItem> inventory;
+	private Map<String, InventoryItem> inventory;
 
 	public InventoryRepository() {
 		readInventoryFromFile();
+	}
+	
+	public InventoryItem getInventoryItem(String code) {
+		return inventory.get(code);
 	}
 
 	public void updateInventory() {
