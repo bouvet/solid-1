@@ -16,7 +16,6 @@ namespace SRP_DI_Workshop
         private readonly OrderRepository _orderRepositoryInstance;
         private readonly InventoryRepository _inventoryServiceInstance;
         private readonly PricingCalculationFactory _pricingCalculationFactoryInstance;
-        private readonly OrderOperationFactory _orderOperationFactoryInstance;
 
         public DependencyResolver()
         {
@@ -44,7 +43,6 @@ namespace SRP_DI_Workshop
             _orderRepositoryInstance = new OrderRepository(Resolve<ILoggerService>());
             _inventoryServiceInstance = new InventoryRepository(Resolve<ILoggerService>());
             _pricingCalculationFactoryInstance = new PricingCalculationFactory(this);
-            _orderOperationFactoryInstance = new OrderOperationFactory(Resolve<IEnumerable<IOrderOperation>>());
             _orderProcessorInstance = new OrderProcessor(Resolve<IResponseMessageFactory>(), Resolve<ILoggerService>(), Resolve<IDeduplicator>(), Resolve<IOrderOperationFactory>());
         }
 
@@ -81,7 +79,7 @@ namespace SRP_DI_Workshop
 
         private IOrderOperationFactory ResolveOrderOperationFactory()
         {
-            return _orderOperationFactoryInstance;
+            return new OrderOperationFactory(Resolve<IEnumerable<IOrderOperation>>());
         }
 
         private IPricingCalculationFactory ResolvePricingCalculationFactory()
