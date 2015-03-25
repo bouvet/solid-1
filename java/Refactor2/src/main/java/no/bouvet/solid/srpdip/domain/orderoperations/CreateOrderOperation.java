@@ -30,7 +30,7 @@ public class CreateOrderOperation implements OrderOperation {
 		order.getOrderItems().forEach(item -> {
 			InventoryItem inventoryItem = inventoryRepository.getInventoryItem(item.getItemCode());
 
-			if (inventoryItem.getQuantityOnHand() <= item.getQuantity()) {
+			if (inventoryItem.getQuantityOnHand() > item.getQuantity()) {
 				inventoryItem.setQuantityOnHand(inventoryItem.getQuantityOnHand() - item.getQuantity());
 				item.setWeight(item.getWeightPerUnit() * (float) item.getQuantity());
 
